@@ -26,7 +26,6 @@ namespace DVP_Debts
                 dbContextOptions.UseNpgsql(connectionString));
 
             builder.Services.AddScoped<CoreContext, CoreContext>();
-            builder.Services.AddScoped<CoreContext, CoreContext>();
 
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
             builder.Services.AddTransient<IUser, UserService>();
