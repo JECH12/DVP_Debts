@@ -59,6 +59,7 @@ namespace DVP_Debts.Controllers
             {
                 int rta = await _debtService.EditDebt(dto);
                 if (rta == 1) return Ok("Se edito la deuda correctamente");
+                else return BadRequest("Una deuda pagada no puede editarse");
             }
             return BadRequest();
         }

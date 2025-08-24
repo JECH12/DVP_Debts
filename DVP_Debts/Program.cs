@@ -33,6 +33,8 @@ namespace DVP_Debts
             builder.Services.AddTransient<IUser, UserService>();
             builder.Services.AddTransient<IDebtService, DebtService>();
             builder.Services.AddTransient<ICipherSerializerService, CipherSerializerService>();
+            builder.Services.AddTransient<IPaymentService, PaymentService>();
+
 
             var app = builder.Build();
 

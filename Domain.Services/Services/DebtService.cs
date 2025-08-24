@@ -51,15 +51,21 @@ namespace Domain.Services.Services
             List<DebtDto> debtsEntities = new();
             var users = await _unitOfWork.UserRepository.GetAllAsync();
 
-            List<Debt>? debts = new List<Debt>();
+            List<Debt>? debts = new();
 
             if (dto.Type == DebtType.Debtor)
             {
-                debts = (await _unitOfWork.DebtRepository.FindAll(x => x.DebtorId == dto.UserId))!.ToList();
+                debts = (from debt in await _unitOfWork.DebtRepository.GetAllAsync()
+                             where debt.DebtorId == dto.UserId
+                             && (debt.StateId == 0 || debt.StateId == (int)dto.State)
+                             select debt).ToList();
             }
             else if(dto.Type == DebtType.Creditor)
             {
-                debts = (await _unitOfWork.DebtRepository.FindAll(x => x.CreditorId == dto.UserId))!.ToList();
+                debts = (from debt in await _unitOfWork.DebtRepository.GetAllAsync()
+                         where debt.CreditorId == dto.UserId
+                         && (debt.StateId == 0 || debt.StateId == (int)dto.State)
+                         select debt).ToList();
             }
 
             if (debts != null && debts.Any())
@@ -91,7 +97,7 @@ namespace Domain.Services.Services
             Debt entity = _mapper.Map<Debt>(dto);
 
             entity.Creation_date = DateTime.UtcNow;
-            entity.StateId = (int)StateType.Pendiente;
+            entity.StateId = (int)StateType.Pending;
 
             await _unitOfWork.DebtRepository.AddAsync(entity);
             return await _unitOfWork.SaveAsync();
@@ -100,11 +106,17 @@ namespace Domain.Services.Services
         public async Task<int> EditDebt(EditDebtDto dto)
         {
             Debt? entity = await _unitOfWork.DebtRepository.GetByIdAsync(dto.Id);
-            entity!.Creation_date = DateTime.SpecifyKind(entity.Creation_date, DateTimeKind.Utc);
-            entity!.Description = dto.Description;
-            _unitOfWork.DebtRepository.Update(entity);
+            if (entity != null && entity.StateId != (int)StateType.Settled)
+            {
+                entity!.Creation_date = DateTime.SpecifyKind(entity.Creation_date, DateTimeKind.Utc);
+                entity!.Description = dto.Description;
+                _unitOfWork.DebtRepository.Update(entity);
 
-            return await _unitOfWork.SaveAsync();
+                return await _unitOfWork.SaveAsync();
+            }
+
+            return 0;
+            
         }
 
         public async Task<int> DeleteDebt(int DebtId)

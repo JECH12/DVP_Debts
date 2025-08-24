@@ -2,8 +2,8 @@
 {
     public enum StateType
     {
-        Pendiente = 1,
-        Parcialmente_Pagada = 2,
-        Pagada = 3
+        Pending = 1,
+        Partialy_Paid = 2,
+        Settled = 3
     }
 }

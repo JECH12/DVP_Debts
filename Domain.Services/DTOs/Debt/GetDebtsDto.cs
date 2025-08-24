@@ -11,5 +11,7 @@ namespace Domain.Services.DTOs.Debt
     {
         public int UserId { get; set; }
         public DebtType Type { get; set; }
+
+        public StateType State { get; set; }
     }
 }

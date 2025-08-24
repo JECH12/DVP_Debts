@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Entity
+namespace Domain.Services.DTOs.Payment
 {
-    public class Payment
+    public class PaymentDto
     {
-        public int Id { get; set; }
         public int DebtId { get; set; }
         public double Payment_amount { get; set; }
-        public DateTime Payment_date { get; set; } = DateTime.Now;
     }
 }
