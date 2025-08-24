@@ -30,6 +30,13 @@ namespace Infraestructure.Core.Repository
         public void Update(TEntity entity) => _entities.Update(entity);
         public void Delete(TEntity entity) => _entities.Remove(entity);
 
+        public async Task<IEnumerable<TEntity>?> FindAll(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            IQueryable<TEntity> query = AsQueryable();
+            query = await PerformInclusions(includeProperties, query);
+            return query.Where(where);
+        }
+
 
         // Include lambda expressions in queries
         private Task<IQueryable<TEntity>> PerformInclusions(IEnumerable<Expression<Func<TEntity, object>>> includeProperties,

@@ -1,4 +1,5 @@
-﻿using Infraestructure.Entity;
+﻿using Domain.Services.DTOs.User;
+using Infraestructure.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Domain.Services.Interfaces
     public interface IUser
     {
         Task<List<User>> GetListUsers();
+        Task<int> RegisterUser(UserDto user);
     }
 }

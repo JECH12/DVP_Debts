@@ -20,6 +20,8 @@ namespace DVP_Debts
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection");
 
             builder.Services.AddDbContext<CoreContext>(dbContextOptions =>
@@ -29,6 +31,8 @@ namespace DVP_Debts
 
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
             builder.Services.AddTransient<IUser, UserService>();
+            builder.Services.AddTransient<IDebtService, DebtService>();
+            builder.Services.AddTransient<ICipherSerializerService, CipherSerializerService>();
 
             var app = builder.Build();
 
