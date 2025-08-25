@@ -3,8 +3,7 @@ using Domain.Services.Services;
 using Infraestructure.Core.Context;
 using Infraestructure.Core.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Configuration;
+
 
 namespace DVP_Debts
 {
