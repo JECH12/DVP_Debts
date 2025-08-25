@@ -16,3 +16,8 @@ Aunque faltan muchisimas cosas por hacer en este proyecto, se trato de implement
 -La edicion de deudas solo permite cambiar la descripcion dado que al realizar los pagos se altera el monto total de la deuda.
 
 Se trato de usar las mejores practicas aun sabiendo que faltan temas de seguridad, autenticacion, roles, JWT, claims, try y catch, pruebas unitarias.
+
+Soy consciente de que faltan puntos extras como un endpoint para exportar Deudas con JSON y los Test Unitarios, siento que la prueba es bastante larga si se quiere tener todos los puntos cubiertos.
+
+Trate de cubrir lo que mas pude en los 2 dias que tenia para realizarla.
+
