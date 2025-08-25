@@ -30,6 +30,11 @@ namespace Infraestructure.Core.Repository
         public void Update(TEntity entity) => _entities.Update(entity);
         public void Delete(TEntity entity) => _entities.Remove(entity);
 
+        public async Task<TEntity?> Find(Expression<Func<TEntity, bool>> predicate)
+        {
+            IQueryable<TEntity> query = AsQueryable();
+            return await query.FirstOrDefaultAsync(predicate);
+        }
         public async Task<IEnumerable<TEntity>?> FindAll(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             IQueryable<TEntity> query = AsQueryable();

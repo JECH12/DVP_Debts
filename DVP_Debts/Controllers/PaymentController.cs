@@ -24,7 +24,7 @@ namespace DVP_Debts.Controllers
                 if (dto.Payment_amount > 0)
                 {
                     int rta = await _paymentService.CreatePayment(dto);
-                    if (rta > 0) return Ok("Pago realizado satisfactoriamente.");
+                    if (rta > 0) return Ok(rta);
                 }
                 else
                 {

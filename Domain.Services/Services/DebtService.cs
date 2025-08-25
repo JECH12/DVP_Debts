@@ -57,14 +57,14 @@ namespace Domain.Services.Services
             {
                 debts = (from debt in await _unitOfWork.DebtRepository.GetAllAsync()
                              where debt.DebtorId == dto.UserId
-                             && (debt.StateId == 0 || debt.StateId == (int)dto.State)
+                             && (dto.State == 0 || debt.StateId == (int)dto.State)
                              select debt).ToList();
             }
             else if(dto.Type == DebtType.Creditor)
             {
                 debts = (from debt in await _unitOfWork.DebtRepository.GetAllAsync()
                          where debt.CreditorId == dto.UserId
-                         && (debt.StateId == 0 || debt.StateId == (int)dto.State)
+                         && (dto.State == 0 || debt.StateId == (int)dto.State)
                          select debt).ToList();
             }
 
@@ -74,6 +74,7 @@ namespace Domain.Services.Services
                 from debt in debts
                 join debtor in users on debt.DebtorId equals debtor.Id
                 join creditor in users on debt.CreditorId equals creditor.Id
+                join state in await _unitOfWork.StateRepository.GetAllAsync() on debt.StateId equals state.Id
                     select new DebtDto
                     {
                         Id = debt.Id,
@@ -84,7 +85,8 @@ namespace Domain.Services.Services
                         Amount = debt.Amount,
                         Description = debt.Description,
                         Creation_date = debt.Creation_date,
-                        StateId = debt.StateId
+                        StateId = debt.StateId,
+                        StateName = state.Name,                      
                     }
                 ).ToList();
             }

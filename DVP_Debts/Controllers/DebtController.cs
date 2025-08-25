@@ -18,7 +18,7 @@ namespace DVP_Debts.Controllers
 
         [HttpPost]
         [Route("debt/GetDebt")]
-        public async Task<IActionResult> GetDebt(int debtId)
+        public async Task<IActionResult> GetDebt([FromBody] int debtId)
         {
             DebtDto debt = await _debtService.GetDebt(debtId);
             return Ok(debt);

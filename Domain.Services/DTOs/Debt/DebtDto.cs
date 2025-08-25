@@ -17,5 +17,7 @@ namespace Domain.Services.DTOs.Debt
         public string? Description { get; set; }
         public DateTime Creation_date { get; set; }
         public int StateId { get; set; }
+
+        public string StateName { get; set; } = string.Empty;
     }
 }
